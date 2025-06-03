@@ -40,7 +40,7 @@ const App = () => {
   // Play sound effect (visual indicator)
   const playSound = (type) => {
     setSoundEffect(type);
-    setTimeout(() => setSoundEffect(''), 1000);
+    setTimeout(() => setSoundEffect(''), 1200);
   };
 
   // Minimax algorithm for unbeatable AI
@@ -100,7 +100,7 @@ const App = () => {
   const handleCellClick = (index) => {
     if (board[index] || gameStatus !== 'playing' || !isPlayerTurn) return;
 
-    playSound('click');
+    playSound('NEURAL_CLICK');
     const newBoard = [...board];
     newBoard[index] = 'O'; // Einstein (player)
     setBoard(newBoard);
@@ -116,13 +116,13 @@ const App = () => {
       setShowVictoryEffect(true);
       if (result.winner === 'O') {
         setScores(prev => ({ ...prev, einstein: prev.einstein + 1 }));
-        playSound('victory');
+        playSound('HUMAN_VICTORY');
       }
-      setTimeout(() => setShowVictoryEffect(false), 2000);
+      setTimeout(() => setShowVictoryEffect(false), 3000);
     } else if (isBoardFull(newBoard)) {
       setGameStatus('draw');
       setScores(prev => ({ ...prev, draws: prev.draws + 1 }));
-      playSound('draw');
+      playSound('SYSTEM_DRAW');
     }
   };
 
@@ -141,7 +141,7 @@ const App = () => {
           setLastMove(bestMove);
           setIsPlayerTurn(true);
           setIsAiThinking(false);
-          playSound('aiMove');
+          playSound('AI_COMPUTE');
 
           // Check game end
           const result = checkWinner(newBoard);
@@ -152,16 +152,16 @@ const App = () => {
             setShowVictoryEffect(true);
             if (result.winner === 'X') {
               setScores(prev => ({ ...prev, tesla: prev.tesla + 1 }));
-              playSound('aiVictory');
+              playSound('AI_DOMINANCE');
             }
-            setTimeout(() => setShowVictoryEffect(false), 2000);
+            setTimeout(() => setShowVictoryEffect(false), 3000);
           } else if (isBoardFull(newBoard)) {
             setGameStatus('draw');
             setScores(prev => ({ ...prev, draws: prev.draws + 1 }));
-            playSound('draw');
+            playSound('SYSTEM_DRAW');
           }
         }
-      }, 1000); // Longer delay for dramatic effect
+      }, 1500); // Extended for dramatic cyberpunk effect
 
       return () => clearTimeout(timer);
     }
@@ -176,13 +176,13 @@ const App = () => {
     setWinningLine(null);
     setLastMove(null);
     setIsAiThinking(false);
-    playSound('reset');
+    playSound('SYSTEM_RESET');
   };
 
   // Reset scores
   const resetScores = () => {
     setScores({ tesla: 0, einstein: 0, draws: 0 });
-    playSound('reset');
+    playSound('DATA_PURGE');
   };
 
   // Get cell display
@@ -196,18 +196,32 @@ const App = () => {
   const getStatusMessage = () => {
     if (gameStatus === 'won') {
       return winner === 'X' 
-        ? '🏆 Tesla Dominates! The AI is unbeatable!' 
-        : '🎉 Einstein Wins! Absolutely incredible!';
+        ? '🏆 TESLA PROTOCOL EXECUTED - AI SUPREMACY ACHIEVED' 
+        : '🎉 EINSTEIN ALGORITHM BREAKTHROUGH - HUMAN INTELLECT PREVAILS';
     }
     if (gameStatus === 'draw') {
-      return '🤝 Epic Draw! Neither genius could triumph!';
+      return '🤝 QUANTUM EQUILIBRIUM REACHED - STALEMATE PROTOCOL ACTIVE';
     }
     if (isAiThinking) {
-      return '🤖 Tesla is calculating the perfect move...';
+      return '🤖 TESLA NEURAL NETWORK PROCESSING... CALCULATING OPTIMAL STRATEGY';
     }
     return isPlayerTurn 
-      ? '🧠 Einstein\'s Turn - Show your brilliance!' 
-      : '🚛 Tesla will make the first move...';
+      ? '🧠 EINSTEIN INTERFACE ACTIVE - INPUT YOUR STRATEGIC COORDINATES' 
+      : '🚛 TESLA AI INITIALIZING FIRST MOVE SEQUENCE...';
+  };
+
+  // Get sound effect text
+  const getSoundText = (type) => {
+    const sounds = {
+      'NEURAL_CLICK': 'NEURAL CLICK',
+      'AI_COMPUTE': 'AI COMPUTE',
+      'HUMAN_VICTORY': 'HUMAN VICTORY',
+      'AI_DOMINANCE': 'AI DOMINANCE', 
+      'SYSTEM_DRAW': 'SYSTEM DRAW',
+      'SYSTEM_RESET': 'SYSTEM RESET',
+      'DATA_PURGE': 'DATA PURGE'
+    };
+    return sounds[type] || type;
   };
 
   // Get winning line coordinates for SVG
@@ -227,69 +241,64 @@ const App = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 transition-all duration-500 ${showVictoryEffect ? 'victory-screen' : ''}`}>
-      {/* Particle Effects */}
+    <div className={`min-h-screen cyberpunk-bg flex items-center justify-center p-4 transition-all duration-500 ${showVictoryEffect ? 'cyber-victory' : ''}`}>
+      {/* Cyberpunk Particle Effects */}
       {showVictoryEffect && (
         <div className="particle-container">
-          <div className="particles"></div>
+          <div className="cyber-particles"></div>
         </div>
       )}
       
-      {/* Sound Effect Indicator */}
+      {/* Cyberpunk Sound Effect Indicator */}
       {soundEffect && (
-        <div className="fixed top-4 right-4 bg-black/80 text-white px-3 py-1 rounded-full text-sm font-semibold z-50 sound-indicator">
-          🔊 {soundEffect === 'click' && 'Click!'}
-          {soundEffect === 'aiMove' && 'Tesla Move!'}
-          {soundEffect === 'victory' && 'Victory!'}
-          {soundEffect === 'aiVictory' && 'Tesla Wins!'}
-          {soundEffect === 'draw' && 'Draw!'}
-          {soundEffect === 'reset' && 'Reset!'}
+        <div className="fixed top-4 right-4 cyber-sound text-black px-4 py-2 rounded text-sm font-bold z-50">
+          ⚡ {getSoundText(soundEffect)}
         </div>
       )}
 
       <div className="w-full max-w-md mx-auto">
-        {/* Header */}
+        {/* Cyberpunk Header */}
         <div className="text-center mb-8">
-          <h1 className="retro-title text-3xl md:text-4xl mb-2">
-            <span className="retro-einstein">Einstein</span>
-            <span className="retro-vs mx-4 text-2xl md:text-3xl">vs</span>
-            <span className="retro-tesla">Tesla</span>
+          <h1 className="cyber-title text-3xl md:text-4xl mb-3" data-text="EINSTEIN VS TESLA">
+            <span className="cyber-einstein">Einstein</span>
+            <span className="cyber-vs mx-4 text-2xl md:text-3xl">vs</span>
+            <span className="cyber-tesla">Tesla</span>
           </h1>
-          <p className="text-gray-300 text-sm font-medium tracking-wide">
-            ⚡ The Ultimate Battle of Minds ⚡
+          <p className="text-cyan-300 text-sm font-bold tracking-wider" style={{fontFamily: 'Orbitron'}}>
+            ⚡ NEURAL WARFARE PROTOCOL ACTIVATED ⚡
           </p>
         </div>
 
-        {/* Scoreboard */}
-        <div className="bg-black/40 backdrop-blur-lg rounded-xl p-5 mb-6 border border-gray-600 shadow-2xl score-glow">
+        {/* Cyberpunk Scoreboard */}
+        <div className="holo-panel neon-scoreboard rounded-lg p-5 mb-6">
           <div className="flex justify-between items-center text-sm">
             <div className="text-center">
-              <div className="text-cyan-400 font-bold text-lg">🧠 Einstein</div>
-              <div className="text-3xl font-bold text-white counter-animate">{scores.einstein}</div>
+              <div className="text-cyan-400 font-bold text-lg" style={{fontFamily: 'Orbitron'}}>🧠 EINSTEIN</div>
+              <div className="text-4xl font-bold text-white counter-animate" style={{fontFamily: 'Orbitron'}}>{scores.einstein}</div>
             </div>
             <div className="text-center">
-              <div className="text-yellow-400 font-bold">⭐ Draws</div>
-              <div className="text-2xl font-bold text-gray-300 counter-animate">{scores.draws}</div>
+              <div className="text-yellow-400 font-bold" style={{fontFamily: 'Orbitron'}}>⭐ DRAWS</div>
+              <div className="text-2xl font-bold text-gray-300 counter-animate" style={{fontFamily: 'Orbitron'}}>{scores.draws}</div>
             </div>
             <div className="text-center">
-              <div className="text-red-400 font-bold text-lg">Tesla 🚛</div>
-              <div className="text-3xl font-bold text-white counter-animate">{scores.tesla}</div>
+              <div className="text-magenta-400 font-bold text-lg" style={{fontFamily: 'Orbitron', color: 'var(--neon-magenta)'}}>TESLA 🚛</div>
+              <div className="text-4xl font-bold text-white counter-animate" style={{fontFamily: 'Orbitron'}}>{scores.tesla}</div>
             </div>
           </div>
         </div>
 
-        {/* Game Status */}
+        {/* Cyberpunk Game Status */}
         <div className="text-center mb-6">
-          <div className={`bg-black/40 backdrop-blur-lg rounded-lg px-6 py-4 border border-gray-600 shadow-xl ${isAiThinking ? 'ai-thinking-glow' : 'status-glow'}`}>
-            <p className={`text-white font-bold text-lg ${isAiThinking ? 'ai-thinking-pulse' : ''}`}>
+          <div className={`holo-panel rounded-lg px-6 py-4 ${isAiThinking ? 'ai-thinking' : ''}`}>
+            <p className="text-white font-bold text-sm leading-relaxed" style={{fontFamily: 'Orbitron'}}>
               {getStatusMessage()}
             </p>
           </div>
         </div>
 
-        {/* Game Board */}
-        <div className="relative bg-black/50 backdrop-blur-lg rounded-2xl p-6 border border-gray-600 shadow-2xl board-glow">
-          {/* Winning Line SVG */}
+        {/* Cyberpunk Game Board */}
+        <div className="relative cyber-board rounded-xl p-6 mb-6">
+          {/* Cyberpunk Winning Line SVG */}
           {winningLine && (
             <svg 
               className="absolute inset-0 w-full h-full pointer-events-none z-10"
@@ -298,10 +307,8 @@ const App = () => {
             >
               <line
                 {...getLineCoordinates(winningLine)}
-                stroke={winner === 'X' ? '#ef4444' : '#06b6d4'}
-                strokeWidth="6"
-                strokeLinecap="round"
-                className="winning-line"
+                stroke={winner === 'X' ? 'var(--neon-magenta)' : 'var(--neon-cyan)'}
+                className="cyber-winning-line"
               />
             </svg>
           )}
@@ -312,50 +319,46 @@ const App = () => {
                 key={index}
                 onClick={() => handleCellClick(index)}
                 className={`
-                  aspect-square rounded-xl text-4xl font-bold transition-all duration-300
-                  border-2 backdrop-blur-sm relative overflow-hidden
-                  ${cell 
-                    ? 'bg-gray-800/60 border-gray-500 cursor-default cell-filled' 
-                    : 'bg-gray-900/60 border-gray-600 hover:bg-gray-700/60 hover:border-cyan-400 cursor-pointer active:scale-95 cell-hover-glow'
-                  }
+                  aspect-square rounded-lg text-4xl font-bold transition-all duration-300
+                  cyber-cell flex items-center justify-center relative overflow-hidden
+                  ${cell ? 'cyber-cell-filled cursor-default' : 'cursor-pointer active:scale-95'}
                   ${!isPlayerTurn && gameStatus === 'playing' && !cell ? 'cursor-not-allowed opacity-60' : ''}
-                  ${lastMove === index ? 'last-move-glow' : ''}
-                  ${winningLine?.includes(index) ? 'winning-cell' : ''}
-                  flex items-center justify-center cell-3d
+                  ${lastMove === index ? 'cyber-cell-last-move' : ''}
+                  ${winningLine?.includes(index) ? 'cyber-cell-winning' : ''}
                 `}
                 disabled={!isPlayerTurn || gameStatus !== 'playing' || cell}
               >
-                <span className={`cell-content ${cell ? 'symbol-animate' : ''}`}>
+                <span className={`${cell ? 'cyber-symbol' : ''}`}>
                   {getCellContent(cell)}
                 </span>
                 {!cell && isPlayerTurn && gameStatus === 'playing' && (
-                  <span className="preview-symbol">🧠</span>
+                  <span className="cyber-preview absolute">🧠</span>
                 )}
               </button>
             ))}
           </div>
 
-          {/* Game Controls */}
+          {/* Cyberpunk Game Controls */}
           <div className="flex gap-3">
             <button
               onClick={resetGame}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 active:from-purple-800 active:to-purple-900 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 active:scale-95 button-3d button-glow"
+              className="flex-1 cyber-button text-white font-bold py-4 px-4 rounded-lg"
             >
-              🎮 New Game
+              🎮 INITIALIZE NEW BATTLE
             </button>
             <button
               onClick={resetScores}
-              className="flex-1 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 active:from-gray-900 active:to-gray-900 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 active:scale-95 button-3d button-glow"
+              className="flex-1 cyber-button text-white font-bold py-4 px-4 rounded-lg"
             >
-              🔄 Reset Scores
+              🔄 PURGE DATA LOGS
             </button>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-gray-400 text-xs font-medium">
-            🤖 Tesla's AI uses quantum-level algorithms - Can you outsmart it? ⚡
+        {/* Cyberpunk Footer */}
+        <div className="text-center">
+          <p className="text-cyan-400 text-xs font-bold tracking-wide" style={{fontFamily: 'Orbitron'}}>
+            🤖 TESLA NEURAL MATRIX v2.0 - UNBREAKABLE QUANTUM ALGORITHMS ⚡
           </p>
         </div>
       </div>

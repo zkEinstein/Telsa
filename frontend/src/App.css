@@ -1,393 +1,510 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles for the enhanced tic tac toe game */
+/* Cyberpunk root variables */
+:root {
+  --neon-cyan: #00ffff;
+  --neon-magenta: #ff00ff;
+  --neon-green: #00ff41;
+  --neon-purple: #bf00ff;
+  --neon-orange: #ff6600;
+  --cyber-dark: #0a0a0f;
+  --cyber-darker: #050508;
+}
+
+/* Custom styles for cyberpunk tic tac toe */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background: var(--cyber-darker);
 }
 
-/* 8-bit style title */
-.retro-title {
-  font-family: 'Press Start 2P', monospace;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 1.2;
-  image-rendering: pixelated;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: unset;
-  text-shadow: 
-    2px 2px 0px #000,
-    4px 4px 0px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(59, 130, 246, 0.5),
-    0 0 40px rgba(139, 92, 246, 0.3);
+/* Cyberpunk background with animated grid */
+.cyberpunk-bg {
+  background: 
+    linear-gradient(90deg, transparent 98%, rgba(0, 255, 255, 0.03) 100%),
+    linear-gradient(0deg, transparent 98%, rgba(255, 0, 255, 0.03) 100%),
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(191, 0, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0f0a1a 100%);
+  background-size: 50px 50px, 50px 50px, 200% 200%, 200% 200%, 100% 100%;
+  animation: gridMove 20s linear infinite;
+  position: relative;
 }
 
-.retro-einstein {
-  color: #00f5ff;
-  text-shadow: 
-    2px 2px 0px #000,
-    4px 4px 0px rgba(0, 0, 0, 0.3),
-    0 0 20px #00f5ff,
-    0 0 40px #00f5ff;
-}
-
-.retro-vs {
-  color: #ffffff;
-  text-shadow: 
-    2px 2px 0px #000,
-    4px 4px 0px rgba(0, 0, 0, 0.3);
-}
-
-.retro-tesla {
-  color: #ff073a;
-  text-shadow: 
-    2px 2px 0px #000,
-    4px 4px 0px rgba(0, 0, 0, 0.3),
-    0 0 20px #ff073a,
-    0 0 40px #ff073a;
-}
-
-/* Neon glow effects */
-.neon-glow {
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
-}
-
-.brain-glow {
-  text-shadow: 0 0 15px rgba(6, 182, 212, 0.6), 0 0 30px rgba(6, 182, 212, 0.4);
-}
-
-.truck-glow {
-  text-shadow: 0 0 15px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4);
-}
-
-.score-glow {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.status-glow {
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.ai-thinking-glow {
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  animation: aiThinkingPulse 1.5s ease-in-out infinite;
-}
-
-.board-glow {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-/* Cell animations and effects */
-.cell-3d {
-  transform-style: preserve-3d;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cell-hover-glow:hover {
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 20px rgba(6, 182, 212, 0.1);
-  transform: translateY(-2px) scale(1.02);
-}
-
-.cell-filled {
-  background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(75, 85, 99, 0.6) 100%);
-}
-
-.last-move-glow {
-  animation: lastMoveGlow 1s ease-out;
-}
-
-.winning-cell {
-  animation: winningCellPulse 1.5s ease-in-out infinite;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%);
-}
-
-/* Symbol animations */
-.symbol-animate {
-  animation: symbolAppear 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.preview-symbol {
+.cyberpunk-bg::before {
+  content: '';
   position: absolute;
-  opacity: 0.3;
-  font-size: 2rem;
-  pointer-events: none;
-  animation: previewPulse 2s ease-in-out infinite;
-}
-
-/* Counter animations */
-.counter-animate {
-  transition: all 0.3s ease;
-}
-
-.counter-animate:hover {
-  transform: scale(1.1);
-}
-
-/* AI thinking animation */
-.ai-thinking-pulse {
-  animation: aiThinkingText 1.5s ease-in-out infinite;
-}
-
-/* Button enhancements */
-.button-3d {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
-}
-
-.button-glow:hover {
-  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-.button-3d:active {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: translateY(0);
-}
-
-/* Winning line animation */
-.winning-line {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: drawLine 1s ease-out forwards;
-  filter: drop-shadow(0 0 8px currentColor);
-}
-
-/* Victory screen effects */
-.victory-screen {
-  animation: victoryShake 0.5s ease-in-out;
-}
-
-/* Particle effects */
-.particle-container {
-  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 255, 0.02) 2px,
+      rgba(0, 255, 255, 0.02) 4px
+    );
+  animation: scanlines 0.1s linear infinite;
   pointer-events: none;
-  z-index: 1000;
+}
+
+/* Cyberpunk 8-bit title */
+.cyber-title {
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1.2;
+  position: relative;
+  animation: titleGlitch 3s ease-in-out infinite;
+}
+
+.cyber-title::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 2px;
+  color: var(--neon-magenta);
+  opacity: 0.8;
+  animation: glitchOffset1 2s infinite;
+}
+
+.cyber-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: -2px;
+  color: var(--neon-cyan);
+  opacity: 0.8;
+  animation: glitchOffset2 2s infinite;
+}
+
+.cyber-einstein {
+  color: var(--neon-cyan);
+  text-shadow: 
+    0 0 5px var(--neon-cyan),
+    0 0 10px var(--neon-cyan),
+    0 0 20px var(--neon-cyan),
+    0 0 40px var(--neon-cyan),
+    2px 2px 0px #000;
+  filter: brightness(1.2);
+}
+
+.cyber-vs {
+  color: #ffffff;
+  text-shadow: 
+    0 0 5px #ffffff,
+    0 0 10px #ffffff,
+    2px 2px 0px #000;
+}
+
+.cyber-tesla {
+  color: var(--neon-magenta);
+  text-shadow: 
+    0 0 5px var(--neon-magenta),
+    0 0 10px var(--neon-magenta),
+    0 0 20px var(--neon-magenta),
+    0 0 40px var(--neon-magenta),
+    2px 2px 0px #000;
+  filter: brightness(1.2);
+}
+
+/* Holographic panels */
+.holo-panel {
+  background: 
+    linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.05) 100%);
+  border: 2px solid;
+  border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta)) 1;
+  backdrop-filter: blur(10px) brightness(1.1);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.3),
+    inset 0 0 20px rgba(255, 0, 255, 0.1),
+    0 0 60px rgba(0, 255, 255, 0.1);
+  position: relative;
   overflow: hidden;
 }
 
-.particles {
+.holo-panel::before {
+  content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 70%
+  );
+  animation: holoShimmer 3s linear infinite;
+}
+
+/* Neon scoreboard */
+.neon-scoreboard {
+  background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(191, 0, 255, 0.1) 100%);
+  border: 2px solid var(--neon-green);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 65, 0.4),
+    inset 0 0 30px rgba(191, 0, 255, 0.1);
+}
+
+/* Cyberpunk game board */
+.cyber-board {
   background: 
-    radial-gradient(circle, #ffd700 2px, transparent 2px),
-    radial-gradient(circle, #ff6b6b 1px, transparent 1px),
-    radial-gradient(circle, #4ecdc4 1.5px, transparent 1.5px),
-    radial-gradient(circle, #45b7d1 1px, transparent 1px),
-    radial-gradient(circle, #96ceb4 2px, transparent 2px);
-  background-size: 50px 50px, 30px 30px, 40px 40px, 35px 35px, 45px 45px;
-  background-position: 0 0, 10px 10px, 20px 20px, 30px 30px, 40px 40px;
-  animation: particleFloat 3s ease-out;
+    radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(26, 10, 31, 0.9) 100%);
+  border: 3px solid;
+  border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-magenta)) 1;
+  box-shadow: 
+    0 0 50px rgba(0, 255, 255, 0.3),
+    inset 0 0 50px rgba(255, 0, 255, 0.1);
+  position: relative;
+}
+
+.cyber-board::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 48%, rgba(0, 255, 255, 0.1) 50%, transparent 52%),
+    linear-gradient(0deg, transparent 48%, rgba(255, 0, 255, 0.1) 50%, transparent 52%);
+  background-size: 33.33% 33.33%;
+  pointer-events: none;
+  animation: circuitPulse 4s ease-in-out infinite;
+}
+
+/* Cyberpunk cells */
+.cyber-cell {
+  background: 
+    linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(255, 0, 255, 0.05) 100%);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.2),
+    inset 0 0 15px rgba(255, 0, 255, 0.1);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  clip-path: polygon(5px 0%, 100% 0%, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0% 100%, 0% 5px);
+}
+
+.cyber-cell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 49%, rgba(255, 255, 255, 0.1) 50%, transparent 51%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-cell:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 
+    0 0 30px var(--neon-cyan),
+    inset 0 0 30px rgba(0, 255, 255, 0.2);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.cyber-cell:hover::before {
+  opacity: 1;
+}
+
+.cyber-cell-filled {
+  background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(191, 0, 255, 0.2) 100%);
+  border-color: var(--neon-green);
+  box-shadow: 
+    0 0 25px rgba(0, 255, 65, 0.4),
+    inset 0 0 25px rgba(191, 0, 255, 0.2);
+}
+
+.cyber-cell-last-move {
+  animation: cyberPulse 1.5s ease-out;
+  border-color: var(--neon-orange);
+  box-shadow: 
+    0 0 40px var(--neon-orange),
+    inset 0 0 40px rgba(255, 102, 0, 0.3);
+}
+
+.cyber-cell-winning {
+  animation: winnerPulse 2s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.3) 0%, rgba(0, 255, 255, 0.3) 100%);
+  border-color: var(--neon-magenta);
+  box-shadow: 
+    0 0 50px var(--neon-magenta),
+    inset 0 0 50px rgba(255, 0, 255, 0.4);
+}
+
+/* Enhanced symbol animations */
+.cyber-symbol {
+  filter: drop-shadow(0 0 10px currentColor);
+  animation: symbolMaterialize 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.cyber-preview {
+  opacity: 0.4;
+  filter: drop-shadow(0 0 5px var(--neon-cyan));
+  animation: previewFlicker 2s ease-in-out infinite;
+}
+
+/* Cyberpunk buttons */
+.cyber-button {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.3),
+    inset 0 0 20px rgba(255, 0, 255, 0.1);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+  transition: all 0.3s ease;
+}
+
+.cyber-button:hover {
+  border-color: var(--neon-magenta);
+  box-shadow: 
+    0 0 30px var(--neon-magenta),
+    inset 0 0 30px rgba(255, 0, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.cyber-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 0 15px var(--neon-magenta),
+    inset 0 0 15px rgba(255, 0, 255, 0.3);
+}
+
+/* AI thinking enhancement */
+.ai-thinking {
+  animation: aiProcessing 1s ease-in-out infinite;
+  border-color: var(--neon-orange) !important;
+  box-shadow: 
+    0 0 40px var(--neon-orange),
+    inset 0 0 40px rgba(255, 102, 0, 0.2) !important;
+}
+
+/* Winning line with cyberpunk style */
+.cyber-winning-line {
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: drawCyberLine 1.5s ease-out forwards;
+  filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor);
+}
+
+/* Victory effects */
+.cyber-victory {
+  animation: cyberVictoryShake 0.8s ease-in-out;
 }
 
 /* Sound effect indicator */
-.sound-indicator {
-  animation: soundPop 1s ease-out;
+.cyber-sound {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.9) 0%, rgba(255, 0, 255, 0.9) 100%);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 20px var(--neon-cyan);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  animation: soundGlitch 1s ease-out;
+  clip-path: polygon(5px 0%, 100% 0%, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0% 100%, 0% 5px);
+}
+
+/* Cyberpunk particle effects */
+.cyber-particles {
+  background: 
+    radial-gradient(circle, var(--neon-cyan) 2px, transparent 2px),
+    radial-gradient(circle, var(--neon-magenta) 1px, transparent 1px),
+    radial-gradient(circle, var(--neon-green) 1.5px, transparent 1.5px),
+    radial-gradient(circle, var(--neon-purple) 1px, transparent 1px),
+    radial-gradient(circle, var(--neon-orange) 2px, transparent 2px);
+  background-size: 60px 60px, 40px 40px, 50px 50px, 45px 45px, 55px 55px;
+  background-position: 0 0, 15px 15px, 30px 30px, 45px 45px, 60px 60px;
+  animation: cyberParticleFloat 4s ease-out;
 }
 
 /* Keyframe animations */
-@keyframes symbolAppear {
+@keyframes gridMove {
+  0% { background-position: 0 0, 0 0, 0% 0%, 0% 0%, 0 0; }
+  100% { background-position: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 0 0; }
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+@keyframes titleGlitch {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0.8; transform: translate(1px, -1px); }
+}
+
+@keyframes glitchOffset1 {
+  0%, 90%, 100% { transform: translate(0); }
+  95% { transform: translate(2px, 0); }
+}
+
+@keyframes glitchOffset2 {
+  0%, 90%, 100% { transform: translate(0); }
+  95% { transform: translate(-2px, 0); }
+}
+
+@keyframes holoShimmer {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes circuitPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes cyberPulse {
+  0% { 
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px var(--neon-orange);
+    transform: scale(1.05);
+  }
+  100% { 
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    transform: scale(1);
+  }
+}
+
+@keyframes winnerPulse {
+  0%, 100% { 
+    box-shadow: 0 0 25px var(--neon-magenta);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 60px var(--neon-magenta);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes symbolMaterialize {
   0% {
     transform: scale(0) rotate(180deg);
     opacity: 0;
+    filter: drop-shadow(0 0 20px currentColor);
   }
   70% {
-    transform: scale(1.2) rotate(-10deg);
+    transform: scale(1.3) rotate(-10deg);
+    filter: drop-shadow(0 0 15px currentColor);
   }
   100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
+    filter: drop-shadow(0 0 10px currentColor);
   }
 }
 
-@keyframes lastMoveGlow {
-  0% {
-    box-shadow: 0 0 0 rgba(6, 182, 212, 0);
-    transform: scale(1);
+@keyframes previewFlicker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes aiProcessing {
+  0%, 100% { 
+    box-shadow: 0 0 20px var(--neon-orange);
   }
-  50% {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
-    transform: scale(1.05);
-  }
-  100% {
-    box-shadow: 0 0 0 rgba(6, 182, 212, 0);
-    transform: scale(1);
+  50% { 
+    box-shadow: 0 0 50px var(--neon-orange);
   }
 }
 
-@keyframes winningCellPulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
-    transform: scale(1.02);
-  }
+@keyframes drawCyberLine {
+  to { stroke-dashoffset: 0; }
 }
 
-@keyframes previewPulse {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.9);
-  }
-}
-
-@keyframes aiThinkingPulse {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
-  }
-}
-
-@keyframes aiThinkingText {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes drawLine {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes victoryShake {
+@keyframes cyberVictoryShake {
   0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-  20%, 40%, 60%, 80% { transform: translateX(2px); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px) rotateZ(0.5deg); }
+  20%, 40%, 60%, 80% { transform: translateX(3px) rotateZ(-0.5deg); }
 }
 
-@keyframes particleFloat {
+@keyframes soundGlitch {
   0% {
     opacity: 0;
-    transform: translateY(100vh) scale(0);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(90vh) scale(1);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(-10vh) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20vh) scale(0);
-  }
-}
-
-@keyframes soundPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.5) translateY(20px);
+    transform: scale(0.5) translateY(20px) rotateX(90deg);
   }
   20% {
     opacity: 1;
-    transform: scale(1.1) translateY(0);
+    transform: scale(1.1) translateY(0) rotateX(0deg);
   }
   80% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) rotateX(0deg);
   }
   100% {
     opacity: 0;
-    transform: scale(0.8) translateY(-10px);
+    transform: scale(0.8) translateY(-10px) rotateX(-90deg);
   }
 }
 
-/* Smooth animations for game elements */
-.game-cell {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Enhanced button effects */
-button {
-  user-select: none;
-}
-
-/* Backdrop blur support */
-@supports (backdrop-filter: blur(10px)) {
-  .backdrop-blur-sm {
-    backdrop-filter: blur(4px);
+@keyframes cyberParticleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0) rotate(0deg);
   }
-  
-  .backdrop-blur-lg {
-    backdrop-filter: blur(12px);
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) scale(1) rotate(45deg);
   }
-}
-
-/* Fallback for browsers without backdrop-filter */
-@supports not (backdrop-filter: blur(10px)) {
-  .backdrop-blur-sm,
-  .backdrop-blur-lg {
-    background-color: rgba(0, 0, 0, 0.8);
+  90% {
+    opacity: 1;
+    transform: translateY(-10vh) scale(1) rotate(315deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20vh) scale(0) rotate(360deg);
   }
 }
 
 /* Mobile optimizations */
 @media (max-width: 640px) {
-  .game-board {
-    padding: 1rem;
+  .cyber-title {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
   }
   
-  .cell-content {
+  .cyber-cell {
     font-size: 2rem;
   }
   
-  .particles {
-    background-size: 30px 30px, 20px 20px, 25px 25px, 22px 22px, 28px 28px;
-  }
-  
-  .retro-title {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
+  .cyber-particles {
+    background-size: 40px 40px, 25px 25px, 35px 35px, 30px 30px, 38px 38px;
   }
 }
 
-/* High contrast mode support */
+/* High contrast mode */
 @media (prefers-contrast: high) {
-  .bg-gradient-to-br {
-    background: #000;
-  }
-  
-  .border-gray-600 {
-    border-color: #fff;
-  }
-  
-  .neon-glow,
-  .brain-glow,
-  .truck-glow {
-    text-shadow: none;
-  }
-  
-  .retro-title {
-    text-shadow: 2px 2px 0px #fff;
+  :root {
+    --neon-cyan: #ffffff;
+    --neon-magenta: #ffffff;
+    --neon-green: #ffffff;
+    --neon-purple: #ffffff;
   }
 }
 
-/* Reduced motion support */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -395,9 +512,5 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-  
-  .particles {
-    display: none;
   }
 }
