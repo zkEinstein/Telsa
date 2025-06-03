@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles for the tic tac toe game */
+/* Custom styles for the enhanced tic tac toe game */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,79 +10,279 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Smooth animations for game elements */
-.game-cell {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+/* Neon glow effects */
+.neon-glow {
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
-.game-cell:hover {
+.brain-glow {
+  text-shadow: 0 0 15px rgba(6, 182, 212, 0.6), 0 0 30px rgba(6, 182, 212, 0.4);
+}
+
+.truck-glow {
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4);
+}
+
+.score-glow {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.status-glow {
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.ai-thinking-glow {
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: aiThinkingPulse 1.5s ease-in-out infinite;
+}
+
+.board-glow {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Cell animations and effects */
+.cell-3d {
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cell-hover-glow:hover {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 20px rgba(6, 182, 212, 0.1);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.cell-filled {
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(75, 85, 99, 0.6) 100%);
+}
+
+.last-move-glow {
+  animation: lastMoveGlow 1s ease-out;
+}
+
+.winning-cell {
+  animation: winningCellPulse 1.5s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%);
+}
+
+/* Symbol animations */
+.symbol-animate {
+  animation: symbolAppear 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.preview-symbol {
+  position: absolute;
+  opacity: 0.3;
+  font-size: 2rem;
+  pointer-events: none;
+  animation: previewPulse 2s ease-in-out infinite;
+}
+
+/* Counter animations */
+.counter-animate {
+  transition: all 0.3s ease;
+}
+
+.counter-animate:hover {
+  transform: scale(1.1);
+}
+
+/* AI thinking animation */
+.ai-thinking-pulse {
+  animation: aiThinkingText 1.5s ease-in-out infinite;
+}
+
+/* Button enhancements */
+.button-3d {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.button-glow:hover {
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
-.game-cell:active {
-  transform: scale(0.95);
+.button-3d:active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
 }
 
-/* Pulse animation for AI thinking */
-@keyframes pulse {
+/* Winning line animation */
+.winning-line {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 1s ease-out forwards;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Victory screen effects */
+.victory-screen {
+  animation: victoryShake 0.5s ease-in-out;
+}
+
+/* Particle effects */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle, #ffd700 2px, transparent 2px),
+    radial-gradient(circle, #ff6b6b 1px, transparent 1px),
+    radial-gradient(circle, #4ecdc4 1.5px, transparent 1.5px),
+    radial-gradient(circle, #45b7d1 1px, transparent 1px),
+    radial-gradient(circle, #96ceb4 2px, transparent 2px);
+  background-size: 50px 50px, 30px 30px, 40px 40px, 35px 35px, 45px 45px;
+  background-position: 0 0, 10px 10px, 20px 20px, 30px 30px, 40px 40px;
+  animation: particleFloat 3s ease-out;
+}
+
+/* Sound effect indicator */
+.sound-indicator {
+  animation: soundPop 1s ease-out;
+}
+
+/* Keyframe animations */
+@keyframes symbolAppear {
+  0% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes lastMoveGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(6, 182, 212, 0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(6, 182, 212, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes winningCellPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes previewPulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes aiThinkingPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+  }
+}
+
+@keyframes aiThinkingText {
   0%, 100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 
-.ai-thinking {
-  animation: pulse 1.5s ease-in-out infinite;
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
-/* Gradient text effects */
-.gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@keyframes victoryShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
-/* Custom scrollbar for webkit browsers */
-::-webkit-scrollbar {
-  width: 8px;
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(-10vh) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20vh) scale(0);
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.1);
+@keyframes soundPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.1) translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+/* Smooth animations for game elements */
+.game-cell {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Enhanced button effects */
 button {
   user-select: none;
-}
-
-.game-button {
-  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
-}
-
-.game-button:hover {
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
-  transform: translateY(-1px);
-}
-
-.game-button:active {
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-  transform: translateY(0);
 }
 
 /* Backdrop blur support */
@@ -91,28 +291,17 @@ button {
     backdrop-filter: blur(4px);
   }
   
-  .backdrop-blur {
-    backdrop-filter: blur(8px);
+  .backdrop-blur-lg {
+    backdrop-filter: blur(12px);
   }
 }
 
 /* Fallback for browsers without backdrop-filter */
 @supports not (backdrop-filter: blur(10px)) {
   .backdrop-blur-sm,
-  .backdrop-blur {
+  .backdrop-blur-lg {
     background-color: rgba(0, 0, 0, 0.8);
   }
-}
-
-/* Victory animation */
-@keyframes victory {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.victory-animation {
-  animation: victory 0.6s ease-in-out;
 }
 
 /* Mobile optimizations */
@@ -121,8 +310,12 @@ button {
     padding: 1rem;
   }
   
-  .game-cell {
+  .cell-content {
     font-size: 2rem;
+  }
+  
+  .particles {
+    background-size: 30px 30px, 20px 20px, 25px 25px, 22px 22px, 28px 28px;
   }
 }
 
@@ -132,7 +325,28 @@ button {
     background: #000;
   }
   
-  .border-gray-700 {
+  .border-gray-600 {
     border-color: #fff;
+  }
+  
+  .neon-glow,
+  .brain-glow,
+  .truck-glow {
+    text-shadow: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .particles {
+    display: none;
   }
 }
