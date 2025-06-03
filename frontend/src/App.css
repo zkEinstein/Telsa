@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +12,47 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* 8-bit style title */
+.retro-title {
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-shadow: 
+    2px 2px 0px #000,
+    4px 4px 0px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(59, 130, 246, 0.5),
+    0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+.retro-einstein {
+  color: #00f5ff;
+  text-shadow: 
+    2px 2px 0px #000,
+    4px 4px 0px rgba(0, 0, 0, 0.3),
+    0 0 20px #00f5ff,
+    0 0 40px #00f5ff;
+}
+
+.retro-vs {
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000,
+    4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.retro-tesla {
+  color: #ff073a;
+  text-shadow: 
+    2px 2px 0px #000,
+    4px 4px 0px rgba(0, 0, 0, 0.3),
+    0 0 20px #ff073a,
+    0 0 40px #ff073a;
 }
 
 /* Neon glow effects */
@@ -317,6 +359,11 @@ button {
   .particles {
     background-size: 30px 30px, 20px 20px, 25px 25px, 22px 22px, 28px 28px;
   }
+  
+  .retro-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
 }
 
 /* High contrast mode support */
@@ -333,6 +380,10 @@ button {
   .brain-glow,
   .truck-glow {
     text-shadow: none;
+  }
+  
+  .retro-title {
+    text-shadow: 2px 2px 0px #fff;
   }
 }
 

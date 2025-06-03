@@ -250,10 +250,10 @@ const App = () => {
       <div className="w-full max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-white mb-2 tracking-tight neon-glow">
-            <span className="text-cyan-400 brain-glow">🧠 Einstein</span>
-            <span className="text-gray-400 mx-4 text-3xl">vs</span>
-            <span className="text-red-400 truck-glow">Tesla 🚛</span>
+          <h1 className="retro-title text-3xl md:text-4xl mb-2">
+            <span className="retro-einstein">Einstein</span>
+            <span className="retro-vs mx-4 text-2xl md:text-3xl">vs</span>
+            <span className="retro-tesla">Tesla</span>
           </h1>
           <p className="text-gray-300 text-sm font-medium tracking-wide">
             ⚡ The Ultimate Battle of Minds ⚡
