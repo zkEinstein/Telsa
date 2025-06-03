@@ -259,7 +259,7 @@ const App = () => {
       <div className="w-full max-w-md mx-auto">
         {/* Cyberpunk Header */}
         <div className="text-center mb-8">
-          <h1 className="cyber-title text-3xl md:text-4xl mb-3" data-text="EINSTEIN VS TESLA">
+          <h1 className="cyber-title text-3xl md:text-4xl mb-6" data-text="EINSTEIN VS TESLA">
             <span className="cyber-einstein">Einstein</span>
             <span className="cyber-vs mx-4 text-2xl md:text-3xl">vs</span>
             <span className="cyber-tesla">Tesla</span>
