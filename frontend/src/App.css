@@ -12,6 +12,17 @@
   --neon-orange: #ff6600;
   --cyber-dark: #0a0a0f;
   --cyber-darker: #050508;
+
+  /* RGB components for easier rgba() usage */
+  --neon-cyan-rgb: 0, 255, 255;
+  --neon-magenta-rgb: 255, 0, 255;
+  --neon-green-rgb: 0, 255, 65;
+  --neon-purple-rgb: 191, 0, 255;
+  --neon-orange-rgb: 255, 102, 0;
+  --cyber-dark-rgb: 10, 10, 15;
+  --cyber-darker-rgb: 5, 5, 8;
+  --white-rgb: 255, 255, 255;
+  --cyber-dark-purple-shade-rgb: 26, 10, 31;
 }
 
 /* Custom styles for cyberpunk tic tac toe */
@@ -27,11 +38,11 @@ body {
 /* Cyberpunk background with animated grid */
 .cyberpunk-bg {
   background: 
-    linear-gradient(90deg, transparent 98%, rgba(0, 255, 255, 0.03) 100%),
-    linear-gradient(0deg, transparent 98%, rgba(255, 0, 255, 0.03) 100%),
-    radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(191, 0, 255, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0f0a1a 100%);
+    linear-gradient(90deg, transparent 98%, rgba(var(--neon-cyan-rgb), 0.03) 100%),
+    linear-gradient(0deg, transparent 98%, rgba(var(--neon-magenta-rgb), 0.03) 100%),
+    radial-gradient(circle at 20% 80%, rgba(var(--neon-green-rgb), 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(var(--neon-purple-rgb), 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, var(--cyber-dark) 0%, #1a0a1f 50%, #0f0a1a 100%);
   background-size: 50px 50px, 50px 50px, 200% 200%, 200% 200%, 100% 100%;
   animation: gridMove 20s linear infinite;
   position: relative;
@@ -49,8 +60,8 @@ body {
       0deg,
       transparent,
       transparent 2px,
-      rgba(0, 255, 255, 0.02) 2px,
-      rgba(0, 255, 255, 0.02) 4px
+      rgba(var(--neon-cyan-rgb), 0.02) 2px,
+      rgba(var(--neon-cyan-rgb), 0.02) 4px
     );
   animation: scanlines 0.1s linear infinite;
   pointer-events: none;
@@ -119,14 +130,14 @@ body {
 /* Holographic panels */
 .holo-panel {
   background: 
-    linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.05) 100%);
+    linear-gradient(135deg, rgba(var(--neon-cyan-rgb), 0.1) 0%, rgba(var(--neon-magenta-rgb), 0.05) 100%);
   border: 2px solid;
   border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta)) 1;
   backdrop-filter: blur(10px) brightness(1.1);
   box-shadow: 
-    0 0 20px rgba(0, 255, 255, 0.3),
-    inset 0 0 20px rgba(255, 0, 255, 0.1),
-    0 0 60px rgba(0, 255, 255, 0.1);
+    0 0 20px rgba(var(--neon-cyan-rgb), 0.3),
+    inset 0 0 20px rgba(var(--neon-magenta-rgb), 0.1),
+    0 0 60px rgba(var(--neon-cyan-rgb), 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -141,7 +152,7 @@ body {
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.03) 50%,
+    rgba(var(--white-rgb), 0.03) 50%,
     transparent 70%
   );
   animation: holoShimmer 3s linear infinite;
@@ -149,23 +160,23 @@ body {
 
 /* Neon scoreboard */
 .neon-scoreboard {
-  background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(191, 0, 255, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(var(--neon-green-rgb), 0.1) 0%, rgba(var(--neon-purple-rgb), 0.1) 100%);
   border: 2px solid var(--neon-green);
   box-shadow: 
-    0 0 30px rgba(0, 255, 65, 0.4),
-    inset 0 0 30px rgba(191, 0, 255, 0.1);
+    0 0 30px rgba(var(--neon-green-rgb), 0.4),
+    inset 0 0 30px rgba(var(--neon-purple-rgb), 0.1);
 }
 
 /* Cyberpunk game board */
 .cyber-board {
   background: 
-    radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(26, 10, 31, 0.9) 100%);
+    radial-gradient(circle at center, rgba(var(--neon-cyan-rgb), 0.05) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(var(--cyber-dark-rgb), 0.9) 0%, rgba(var(--cyber-dark-purple-shade-rgb), 0.9) 100%);
   border: 3px solid;
   border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-magenta)) 1;
   box-shadow: 
-    0 0 50px rgba(0, 255, 255, 0.3),
-    inset 0 0 50px rgba(255, 0, 255, 0.1);
+    0 0 50px rgba(var(--neon-cyan-rgb), 0.3),
+    inset 0 0 50px rgba(var(--neon-magenta-rgb), 0.1);
   position: relative;
 }
 
@@ -177,8 +188,8 @@ body {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(90deg, transparent 48%, rgba(0, 255, 255, 0.1) 50%, transparent 52%),
-    linear-gradient(0deg, transparent 48%, rgba(255, 0, 255, 0.1) 50%, transparent 52%);
+    linear-gradient(90deg, transparent 48%, rgba(var(--neon-cyan-rgb), 0.1) 50%, transparent 52%),
+    linear-gradient(0deg, transparent 48%, rgba(var(--neon-magenta-rgb), 0.1) 50%, transparent 52%);
   background-size: 33.33% 33.33%;
   pointer-events: none;
   animation: circuitPulse 4s ease-in-out infinite;
@@ -187,11 +198,11 @@ body {
 /* Cyberpunk cells */
 .cyber-cell {
   background: 
-    linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(255, 0, 255, 0.05) 100%);
-  border: 2px solid rgba(0, 255, 255, 0.3);
+    linear-gradient(135deg, rgba(var(--neon-cyan-rgb), 0.05) 0%, rgba(var(--neon-magenta-rgb), 0.05) 100%);
+  border: 2px solid rgba(var(--neon-cyan-rgb), 0.3);
   box-shadow: 
-    0 0 15px rgba(0, 255, 255, 0.2),
-    inset 0 0 15px rgba(255, 0, 255, 0.1);
+    0 0 15px rgba(var(--neon-cyan-rgb), 0.2),
+    inset 0 0 15px rgba(var(--neon-magenta-rgb), 0.1);
   position: relative;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   clip-path: polygon(5px 0%, 100% 0%, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0% 100%, 0% 5px);
@@ -204,7 +215,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, transparent 49%, rgba(255, 255, 255, 0.1) 50%, transparent 51%);
+  background: linear-gradient(45deg, transparent 49%, rgba(var(--white-rgb), 0.1) 50%, transparent 51%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -213,7 +224,7 @@ body {
   border-color: var(--neon-cyan);
   box-shadow: 
     0 0 30px var(--neon-cyan),
-    inset 0 0 30px rgba(0, 255, 255, 0.2);
+    inset 0 0 30px rgba(var(--neon-cyan-rgb), 0.2);
   transform: translateY(-3px) scale(1.02);
 }
 
@@ -222,11 +233,11 @@ body {
 }
 
 .cyber-cell-filled {
-  background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(191, 0, 255, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(var(--neon-green-rgb), 0.2) 0%, rgba(var(--neon-purple-rgb), 0.2) 100%);
   border-color: var(--neon-green);
   box-shadow: 
-    0 0 25px rgba(0, 255, 65, 0.4),
-    inset 0 0 25px rgba(191, 0, 255, 0.2);
+    0 0 25px rgba(var(--neon-green-rgb), 0.4),
+    inset 0 0 25px rgba(var(--neon-purple-rgb), 0.2);
 }
 
 .cyber-cell-last-move {
@@ -234,16 +245,16 @@ body {
   border-color: var(--neon-orange);
   box-shadow: 
     0 0 40px var(--neon-orange),
-    inset 0 0 40px rgba(255, 102, 0, 0.3);
+    inset 0 0 40px rgba(var(--neon-orange-rgb), 0.3);
 }
 
 .cyber-cell-winning {
   animation: winnerPulse 2s ease-in-out infinite;
-  background: linear-gradient(135deg, rgba(255, 0, 255, 0.3) 0%, rgba(0, 255, 255, 0.3) 100%);
+  background: linear-gradient(135deg, rgba(var(--neon-magenta-rgb), 0.3) 0%, rgba(var(--neon-cyan-rgb), 0.3) 100%);
   border-color: var(--neon-magenta);
   box-shadow: 
     0 0 50px var(--neon-magenta),
-    inset 0 0 50px rgba(255, 0, 255, 0.4);
+    inset 0 0 50px rgba(var(--neon-magenta-rgb), 0.4);
 }
 
 /* Enhanced symbol animations */
@@ -260,11 +271,11 @@ body {
 
 /* Cyberpunk buttons */
 .cyber-button {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(var(--neon-cyan-rgb), 0.1) 0%, rgba(var(--neon-magenta-rgb), 0.1) 100%);
   border: 2px solid var(--neon-cyan);
   box-shadow: 
-    0 0 20px rgba(0, 255, 255, 0.3),
-    inset 0 0 20px rgba(255, 0, 255, 0.1);
+    0 0 20px rgba(var(--neon-cyan-rgb), 0.3),
+    inset 0 0 20px rgba(var(--neon-magenta-rgb), 0.1);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   text-transform: uppercase;
@@ -278,7 +289,7 @@ body {
   border-color: var(--neon-magenta);
   box-shadow: 
     0 0 30px var(--neon-magenta),
-    inset 0 0 30px rgba(255, 0, 255, 0.2);
+    inset 0 0 30px rgba(var(--neon-magenta-rgb), 0.2);
   transform: translateY(-2px);
 }
 
@@ -286,7 +297,7 @@ body {
   transform: translateY(0) scale(0.98);
   box-shadow: 
     0 0 15px var(--neon-magenta),
-    inset 0 0 15px rgba(255, 0, 255, 0.3);
+    inset 0 0 15px rgba(var(--neon-magenta-rgb), 0.3);
 }
 
 /* AI thinking enhancement */
@@ -295,7 +306,7 @@ body {
   border-color: var(--neon-orange) !important;
   box-shadow: 
     0 0 40px var(--neon-orange),
-    inset 0 0 40px rgba(255, 102, 0, 0.2) !important;
+    inset 0 0 40px rgba(var(--neon-orange-rgb), 0.2) !important;
 }
 
 /* Winning line with cyberpunk style */
@@ -315,7 +326,7 @@ body {
 
 /* Sound effect indicator */
 .cyber-sound {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.9) 0%, rgba(255, 0, 255, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(var(--neon-cyan-rgb), 0.9) 0%, rgba(var(--neon-magenta-rgb), 0.9) 100%);
   border: 2px solid var(--neon-cyan);
   box-shadow: 0 0 20px var(--neon-cyan);
   font-family: 'Orbitron', monospace;
@@ -375,7 +386,7 @@ body {
 
 @keyframes cyberPulse {
   0% { 
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(var(--neon-cyan-rgb), 0.2);
     transform: scale(1);
   }
   50% { 
@@ -383,7 +394,7 @@ body {
     transform: scale(1.05);
   }
   100% { 
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(var(--neon-cyan-rgb), 0.2);
     transform: scale(1);
   }
 }
